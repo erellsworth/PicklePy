@@ -1,4 +1,6 @@
 twitter_vars.py
+*.sqlite
+*.sqlite-journal
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
