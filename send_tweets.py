@@ -6,4 +6,4 @@ from twitter_connect import api
 
 cursor.execute("SELECT * FROM stories")
 for row in cursor:
-    print(row[1])
+    print(row[3])

@@ -11,16 +11,18 @@ data = result.content.decode().replace('])}while(1);</x>', '')
 parsed = json.loads(data)
 
 if parsed['success']:
-    print('it worked!')
+    print('data found')
     post_count = len(parsed['payload']['posts'])
     print(post_count, "posts found")
 
     #loop through posts:
     for post in parsed['payload']['posts']:
-        print(post['title'])
+        print('adding ' + post['title'])
+        author_key = post['creatorId']
+        author = parsed['payload']['references']['User'][author_key]
         url = publication_url + post['uniqueSlug']
-        cursor.execute("INSERT INTO stories (medium_id, title, url) VALUES (?,?,?)" , (post['id'], post['title'], url))
+        cursor.execute("INSERT OR IGNORE INTO stories (medium_id, title, url, author, author_twitter, pub_date) VALUES (?,?,?,?,?,?)" , (post['id'], post['title'], url, author['name'], author['twitterScreenName'], post['latestPublishedAt']))
 else:
     print('nope')
 
- db.commit()    
+db.commit()
