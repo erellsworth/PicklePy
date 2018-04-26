@@ -1,5 +1,6 @@
 from send_tweet import send_tweet
 
+#requires https://github.com/dbader/schedule
 import schedule
 import time
 

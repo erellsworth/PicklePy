@@ -1,7 +1,7 @@
 from database_functions import *
 from twitter_connect import api
 
-def send_tweet(medium_id=false):
+def send_tweet(medium_id=0):
     if(medium_id):
         story = get_story(medium_id)
     else:

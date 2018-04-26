@@ -9,7 +9,17 @@ def empty_database():
     db.commit()
 
 def list_all_stories():
-    cursor.execute("SELECT * FROM stories ")
+    cursor.execute("SELECT * FROM stories")
+    for story in cursor:
+        print(story[0] + ' - ' + story[1])
+
+def list_sent_stories():
+    cursor.execute("SELECT * FROM stories WHERE sent = 1")
+    for story in cursor:
+        print(story[0] + ' - ' + story[1])
+
+def list_excluded_stories():
+    cursor.execute("SELECT * FROM stories WHERE exclude = 1")
     for story in cursor:
         print(story[0] + ' - ' + story[1])
 

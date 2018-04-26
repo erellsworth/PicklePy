@@ -1,5 +1,6 @@
 import sys
 from publication_scraper import fetch_posts
+from send_tweet import send_tweet
 from database_functions import *
 
 def setup():
@@ -34,20 +35,27 @@ def next_story_sent():
 command_list =      '1: run setup\n'
 command_list +=     '2: show next story\n'
 command_list +=     '3: show all stories\n'
-command_list +=     '4: Tweet story\n'
-command_list +=     '5: exclude story\n'
-command_list +=     '6: mark story sent by id\n'
-command_list +=     '7 mark next story sent\n'
+command_list +=     '4: Tweet story by id\n'
+command_list +=     '5: Tweet next story\n'
+command_list +=     '6: exclude story\n'
+command_list +=     '7: mark story sent by id\n'
+command_list +=     '8: mark next story sent\n'
+command_list +=     '9: show sent stories\n'
+command_list +=     '10: show excluded stories\n'
 
 print(command_list)
 
-command_options = {1 : setup,
-                2 : show_next_story,
+command_options = {
+                1: setup,
+                2: show_next_story,
                 3: list_all_stories,
                 4: tweet_story,
-                5: exclude,
-                6: story_sent,
-                7: next_story_sent
+                5: send_tweet,
+                6: exclude,
+                7: story_sent,
+                8: next_story_sent,
+                9: list_sent_stories,
+                10: list_excluded_stories
 }
 
 command = input("command: ")
