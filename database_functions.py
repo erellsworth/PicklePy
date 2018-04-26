@@ -10,10 +10,15 @@ def empty_database():
 
 def list_all_stories():
     cursor.execute("SELECT * FROM stories ")
-    print(cursor.fetchall())    
+    for story in cursor:
+        print(story[0] + ' - ' + story[1])
 
 def get_next_story():
     cursor.execute("SELECT * FROM stories WHERE sent = 0 AND exclude = 0 ORDER BY pub_date LIMIT 1")
+    return cursor.fetchone()
+
+def get_story(medium_id):
+    cursor.execute("SELECT * FROM stories WHERE medium_id='" + medium_id + "'")
     return cursor.fetchone()
 
 def mark_story_sent(medium_id):
