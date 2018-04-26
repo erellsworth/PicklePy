@@ -16,17 +16,31 @@ def exclude():
     story = get_story(medium_id)
     print('excluding ' + story[1])
 
+def tweet_story():
+    medium_id = input("id: ")
+    send_tweet(medium_id)
+
+def story_sent():
+    medium_id = input("id: ")
+    mark_story_sent(medium_id)
+    story = get_story(medium_id)
+    print(story[1] + ' marked as sent')    
+
 command_list =      '1: run setup\n'
 command_list +=     '2: show next story\n'
 command_list +=     '3: show all stories\n'
-command_list +=     '4: exclude story\n'
+command_list +=     '4: Tweet story\n'
+command_list +=     '5: exclude story\n'
+command_list +=     '6: mark story sent\n'
 
 print(command_list)
 
 command_options = {1 : setup,
                 2 : show_next_story,
                 3: list_all_stories,
-                4: exclude
+                4: tweet_story,
+                5: exclude,
+                6: story_sent
 }
 
 command = input("command: ")
