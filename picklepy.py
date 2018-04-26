@@ -26,12 +26,18 @@ def story_sent():
     story = get_story(medium_id)
     print(story[1] + ' marked as sent')    
 
+def next_story_sent():
+    story = get_next_story()
+    mark_story_sent(story[0])
+    print(story[1] + ' marked as sent') 
+
 command_list =      '1: run setup\n'
 command_list +=     '2: show next story\n'
 command_list +=     '3: show all stories\n'
 command_list +=     '4: Tweet story\n'
 command_list +=     '5: exclude story\n'
-command_list +=     '6: mark story sent\n'
+command_list +=     '6: mark story sent by id\n'
+command_list +=     '7 mark next story sent\n'
 
 print(command_list)
 
@@ -40,7 +46,8 @@ command_options = {1 : setup,
                 3: list_all_stories,
                 4: tweet_story,
                 5: exclude,
-                6: story_sent
+                6: story_sent,
+                7: next_story_sent
 }
 
 command = input("command: ")
