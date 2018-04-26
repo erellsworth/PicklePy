@@ -1,4 +1,4 @@
-from setup_database import *
+from database_connection import *
 import requests
 import json
 import re
@@ -8,7 +8,7 @@ RE_EMOJI = re.compile('[\U00010000-\U0010ffff]', flags=re.UNICODE)
 def strip_emoji(text):
     return RE_EMOJI.sub(r'', text)
 
-def fetch_posts(publication_url = 'https://medium.com/pickle-fork/', count=20):
+def fetch_posts(count=20, publication_url = 'https://medium.com/pickle-fork/'):
     headers = {"Accept" : "application/json", 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     url = publication_url + 'latest/?count=' + str(count)
     result = requests.get(url, headers=headers)
