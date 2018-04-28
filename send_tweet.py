@@ -16,6 +16,6 @@ def send_tweet(medium_id=0):
         author = '@' + story[4]
 
     status_update = '"' + title + '"\n by ' + author + '\n ' + url
-    status = api.PostUpdate(status_update)
+    #status = api.PostUpdate(status_update)
     mark_story_sent(story[0])
     print(status_update)

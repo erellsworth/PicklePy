@@ -1,11 +1,13 @@
 import sys
-from publication_scraper import fetch_posts
+from publication_scraper import *
 from send_tweet import send_tweet
 from database_functions import *
 
 def setup():
     create_tables()
-    fetch_posts(200)
+    payload = fetch_posts(200)
+    if(payload):
+        add_new_posts(payload)
 
 def show_next_story():
     story = get_next_story()

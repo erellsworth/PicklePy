@@ -1,4 +1,5 @@
 twitter_vars.py
+pickle_vars.py
 *.sqlite
 *.sqlite-journal
 

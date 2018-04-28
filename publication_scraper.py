@@ -1,40 +1,36 @@
-from database_connection import *
+from database_functions import *
+from pickle_vars import *
+from send_tweet import send_tweet
 import requests
 import json
-import re
 
-RE_EMOJI = re.compile('[\U00010000-\U0010ffff]', flags=re.UNICODE)
+def add_new_posts(payload, tweet_new_posts=False):
+    post_count = len(payload['posts'])
+    print(post_count, "posts found")
 
-def strip_emoji(text):
-    return RE_EMOJI.sub(r'', text)
+    #loop through posts:
+    for story in payload['posts']:
+        author_key = story['creatorId']
+        author = payload['references']['User'][author_key]
+        add_story(story, author)
+        if tweet_new_posts and post_count <= 5:
+            added_story = get_story(story['id'])
+            print(added_story)
+            if not added_story[6] and not added_story[7]:
+                #not sent and not excluded
+                send_tweet(story['id'])
+            
 
-def fetch_posts(count=20, publication_url = 'https://medium.com/pickle-fork/'):
+def fetch_posts(count=20):
     headers = {"Accept" : "application/json", 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
     url = publication_url + 'latest/?count=' + str(count)
     result = requests.get(url, headers=headers)
     data = result.content.decode().replace('])}while(1);</x>', '')
     parsed = json.loads(data)
     
-    print('fetching data...')
+    print('fetching data from ' + url)
 
     if parsed['success']:
-        post_count = len(parsed['payload']['posts'])
-        print(post_count, "posts found")
-
-        #loop through posts:
-        for post in parsed['payload']['posts']:
-            title = strip_emoji(post['title'])
-            post_url = publication_url + post['uniqueSlug']
-            author_key = post['creatorId']
-            author = parsed['payload']['references']['User'][author_key]
-            author_twitter = '';
-            if 'twitterScreenName' in author:
-                author_twitter = author['twitterScreenName']
-                
-            print('adding', title)
-            #add to database
-            cursor.execute("INSERT OR IGNORE INTO stories (medium_id, title, url, author, author_twitter, pub_date) VALUES (?,?,?,?,?,?)" , (post['id'], title, post_url, author['name'], author_twitter, post['latestPublishedAt']))
+        return parsed['payload']
     else:
-        print('nope')
-
-    db.commit()
+        return false    
