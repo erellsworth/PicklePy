@@ -32,7 +32,13 @@ def list_excluded_stories():
 
 def get_next_story():
     cursor.execute("SELECT * FROM stories WHERE sent = 0 AND exclude = 0 ORDER BY pub_date LIMIT 1")
-    return cursor.fetchone()
+    story = cursor.fetchone()
+    if story:
+        return story
+    else:
+        clear_sent_stories()
+        cursor.execute("SELECT * FROM stories WHERE sent = 0 AND exclude = 0 ORDER BY pub_date LIMIT 1")
+        return cursor.fetchone()
 
 def get_story(medium_id):
     cursor.execute("SELECT * FROM stories WHERE medium_id='" + medium_id + "'")
