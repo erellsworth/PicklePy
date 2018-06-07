@@ -34,6 +34,10 @@ def next_story_sent():
     mark_story_sent(story[0])
     print(story[1] + ' marked as sent') 
 
+def manual_add_story():
+    url = input("url: ")
+    add_story_by_url(url)
+
 command_list =      '1: run setup\n'
 command_list +=     '2: show next story\n'
 command_list +=     '3: show all stories\n'
@@ -44,6 +48,7 @@ command_list +=     '7: mark story sent by id\n'
 command_list +=     '8: mark next story sent\n'
 command_list +=     '9: show sent stories\n'
 command_list +=     '10: show excluded stories\n'
+command_list +=     '11: add story by url\n'
 
 print(command_list)
 
@@ -57,7 +62,8 @@ command_options = {
                 7: story_sent,
                 8: next_story_sent,
                 9: list_sent_stories,
-                10: list_excluded_stories
+                10: list_excluded_stories,
+                11: manual_add_story
 }
 
 command = input("command: ")

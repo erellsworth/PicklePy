@@ -4,6 +4,19 @@ from send_tweet import send_tweet
 import requests
 import json
 
+def add_story_by_url(url):
+    headers = {"Accept" : "application/json", 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
+    result = requests.get(url, headers=headers)
+    data = result.content.decode().replace('])}while(1);</x>', '')
+    parsed = json.loads(data)
+    
+    print('fetching data from ' + url)
+
+    if parsed['success']:
+        return print(parsed['payload'])
+    else:
+        return print('story not found')
+
 def add_new_posts(payload, tweet_new_posts=False):
     post_count = len(payload['posts'])
     print(post_count, "posts found")

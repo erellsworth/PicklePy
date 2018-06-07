@@ -49,6 +49,7 @@ def mark_story_sent(medium_id):
     db.commit()
 
 def clear_sent_stories():
+    print('clear sent stories')
     cursor.execute("UPDATE stories SET sent=0 WHERE sent=1")
     db.commit()
 
@@ -57,7 +58,7 @@ def exclude_story(medium_id):
     db.commit()
 
 def include_story(medium_id):
-    cursor.execute("UPDATE stories SET exclude=1 WHERE medium_id='" + medium_id + "'")
+    cursor.execute("UPDATE stories SET exclude=0 WHERE medium_id='" + medium_id + "'")
     db.commit()
 
 def add_story(story, author):    
